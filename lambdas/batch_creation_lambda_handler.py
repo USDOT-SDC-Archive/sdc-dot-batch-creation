@@ -65,6 +65,7 @@ class CreateBatches:
 
     def create_batch(self, event, context):
         LoggerUtility.setLevel()
+        LoggerUtility.logInfo("Initiating batch creation process")
         table_name = os.environ['DDB_BATCH_TABLE_ARN'].split('/')[1]
         batch_id = self.__get_current_batch_id(table_name)
         if "" == batch_id:
@@ -73,3 +74,4 @@ class CreateBatches:
             self.__create_new_batch_id(table_name)
             self.__update_batch_details(table_name, batch_id)
 
+        LoggerUtility.logInfo("Completed batch creation process")
