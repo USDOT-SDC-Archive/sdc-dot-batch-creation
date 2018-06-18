@@ -33,7 +33,7 @@ class CreateBatches:
             table = dynamodb.Table(table_name)
             response = table.put_item(
                 Item={
-                    "BatchId": str(uuid.uuid4()),
+                    "BatchId": str(int(time.time())),
                     "IsCurrent": "true",
                     "ReadyForProcessing": "false"
                 }
