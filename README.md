@@ -81,7 +81,7 @@ SQS_CURATED_BATCHES_QUEUE_ARN -
 **Step 1**: Setup virtual environment on your system by foloowing below link
 https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example-deployment-pkg.html#with-s3-example-deployment-pkg-python
 
-**Step 2**: Crete a script file with below contents for e.g(sdc-dot-waze-data-curation.sh)
+**Step 2**: Crete a script file with below contents for e.g(sdc-dot-batch-creation.sh)
 ```#!/bin/sh
 
 cd {path_to_your_repository}/sdc-dot-batch-creation
