@@ -8,10 +8,10 @@ import os
 class CreateBatches:
     pass
 
-    def __get_latest_batch(self):
+    def __get_latest_batch(self, latest_batch_id):
         try:
             ssm = boto3.client('ssm')
-            response = ssm.get_parameter(Name='LatestBatchId', WithDecryption=False)
+            response = ssm.get_parameter(Name=latest_batch_id, WithDecryption=False)
             LoggerUtility.logInfo("Response from parameter store - {}".format(response))
             current_batch_id = response["Parameter"]["Value"]
         except Exception as ex:
@@ -19,12 +19,12 @@ class CreateBatches:
             raise ex
         return current_batch_id
     
-    def __create_new_batch_id(self):
+    def __create_new_batch_id(self, latest_batch_id):
         new_batch_id=str(int(time.time()))
         try:
             ssm = boto3.client('ssm')
             response = ssm.put_parameter(
-                Name='LatestBatchId',
+                Name=latest_batch_id,
                 Description='Parameter to hold the latest value of a batch used for processing waze transactions',
                 Value=new_batch_id,
                 Type='String',
@@ -53,12 +53,13 @@ class CreateBatches:
     def create_batch(self, event, context):
         LoggerUtility.setLevel()
         LoggerUtility.logInfo("Initiating batch creation process")
-        current_batch_id = self.__get_latest_batch()
+        latest_batch_id = os.environ["LATEST_BATCH_ID"]
+        current_batch_id = self.__get_latest_batch(latest_batch_id)
         if "" == current_batch_id:
-            new_batch_id = self.__create_new_batch_id()
+            new_batch_id = self.__create_new_batch_id(latest_batch_id)
         else:
-            current_batch_id = self.__get_latest_batch()
+            current_batch_id = self.__get_latest_batch(latest_batch_id)
             self.__push_batchid_to_queue(current_batch_id)
-            new_batch_id = self.__create_new_batch_id()
+            new_batch_id = self.__create_new_batch_id(latest_batch_id)
         
         LoggerUtility.logInfo("Completed batch creation process")
