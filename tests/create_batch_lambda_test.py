@@ -79,9 +79,9 @@ def test_push_batchid_to_queue():
 
 @mock_events
 def test_create_batch():
-    #with pytest.raises(Exception):
-    os.environ["LATEST_BATCH_ID"] = latest_batch_id
-    assert CreateBatches().create_batch(None, None) is None
+    with pytest.raises(Exception):
+        os.environ["LATEST_BATCH_ID"] = latest_batch_id
+        assert CreateBatches().create_batch(None, None) is None
 
 
 
