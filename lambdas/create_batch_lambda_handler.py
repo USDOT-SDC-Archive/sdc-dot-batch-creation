@@ -54,10 +54,10 @@ class CreateBatches:
         latest_batch_id = os.environ["LATEST_BATCH_ID"]
         current_batch_id = self.get_latest_batch(latest_batch_id)
         if "" == current_batch_id:
-            new_batch_id = self.__create_new_batch_id(latest_batch_id)
+            new_batch_id = self.create_new_batch_id(latest_batch_id)
         else:
-            current_batch_id = self.__get_latest_batch(latest_batch_id)
-            self.__push_batchid_to_queue(current_batch_id)
-            new_batch_id = self.__create_new_batch_id(latest_batch_id)
+            current_batch_id = self.get_latest_batch(latest_batch_id)
+            self.push_batchid_to_queue(current_batch_id)
+            new_batch_id = self.create_new_batch_id(latest_batch_id)
         
-        LoggerUtility.logInfo("Completed batch creation process")
+        LoggerUtility.logInfo("Completed batch creation process with batch id - {}".format(new_batch_id))
