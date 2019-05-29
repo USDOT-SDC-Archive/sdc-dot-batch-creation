@@ -15,7 +15,4 @@ addons:
         token:
              secure: "QIzr/yi8r5Ov9xGXgwZM/N04G4NSAC/YaclyVJNJBc5KcsBUz8sSaQvLAmBcEraSpLRfcELfzRSG2OaapL+63XRr1NQaLlYKyYWq0niTfUq4rHsoS9mWIUQILKIYHJMcVYLW7RhBgoH0CesHz5Yn+u+0YC53pL+ZrurAZzABfnC0zAk0H6RsJFc2vKFXydzzlH+uE0d1Zbp/zGjrW8vH5NE0rfv/Gl16dqMc2bpmfuhfdj0FU7/oNA+5BkHPhiC9P0ohOQv6mT8SiXuLHJ3LknQWNVkqEEI84Wi4boL7RPQn5IPlgh2F25K4qazzKIQom+BYmmeh3pN0/PyDP1r7j41EZ8czay0fKRtkK9Q6D/xwbzjo7CRQRsgOUYeHt0TVKOfqUL8mb4OAqMFSYbHMs1HMBkU+g6HDwcX/KdP1UFBtVschSmETzRGehQnvaPcBsv6NSABByUK9yTxJ2Tm5TJEdzYvz0AhosRM2BWC3Fn8yXjtWOaTn/n7PRn3tK07UWynF1JUOp/1mIl1ret57kMHealtAB7IcbM+mJppXmKVlv6PGmU7IRGGJ4vqA+QnsBHQGs7Cs8Kl9p9LAvWU4xUiI6q7RJrQeOELkCetQ+X0qnWzhGbccXwXvxfgjOQskLq5fAxyeAqvQxNyZxRpf4BORHohl5C3nk2mwkYPff3c="
 script:
-    - coverage erase
-    - coverage run -m pytest tests/
-    - coverage xml -i
     - sonar-scanner
