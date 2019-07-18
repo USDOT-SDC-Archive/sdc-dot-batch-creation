@@ -94,12 +94,6 @@ This lamda function is triggered by aws-cloudwatch rule periodically at an inter
 
 **2.** Every time it creates new batch it check if a batch exists with IsCurrent as true, then it is set to false and ReadyForProcessing is set to true
 
-<a name="design-diagram"/>
-
-### Design Diagram
-
-![ssdc-dot-batch-creation](images/sdc-dot-batch-creation.png)
-
 
 <!---                           -->
 <!---     Unit Tests          -->
