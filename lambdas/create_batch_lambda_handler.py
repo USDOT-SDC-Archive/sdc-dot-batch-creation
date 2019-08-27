@@ -4,6 +4,7 @@ import json
 import time
 import os
 
+
 class CreateBatches:
 
     def get_latest_batch(self, latest_batch_id):
@@ -16,7 +17,7 @@ class CreateBatches:
             LoggerUtility.logError("Unable to get latest batch with reason - {}".format(ex))
             raise ex
         return current_batch_id
-    
+
     def create_new_batch_id(self, latest_batch_id):
         new_batch_id = str(int(time.time()))
         try:
@@ -33,16 +34,16 @@ class CreateBatches:
             LoggerUtility.logError("Failed to create new batch with reason - {}".format(ex))
             raise ex
         return new_batch_id
-    
+
     def push_batchid_to_queue(self, current_batch_id):
         try:
             sqs = boto3.resource('sqs', region_name='us-east-1')
             queue_name = os.environ["SQS_CURATED_BATCHES_QUEUE_ARN"].rsplit(':', 1)[1]
             curated_batches_queue = sqs.get_queue_by_name(QueueName=queue_name)
-            response = curated_batches_queue.send_message(MessageBody=json.dumps({
-                'BatchId': current_batch_id
-            }),
-            MessageGroupId="WazeCuratedBatchesMessageGroup")
+            response = curated_batches_queue.send_message(
+                MessageBody=json.dumps({'BatchId': current_batch_id}),
+                MessageGroupId="WazeCuratedBatchesMessageGroup"
+            )
             LoggerUtility.logInfo("Successfully pushed the message to queue for batchid - {}".format(current_batch_id))
         except Exception as ex:
             LoggerUtility.logError("Failed to push the batch to queue - {}".format(ex))
@@ -59,5 +60,5 @@ class CreateBatches:
             current_batch_id = self.get_latest_batch(latest_batch_id)
             self.push_batchid_to_queue(current_batch_id)
             new_batch_id = self.create_new_batch_id(latest_batch_id)
-        
+
         LoggerUtility.logInfo("Completed batch creation process with batch id - {}".format(new_batch_id))
