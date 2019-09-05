@@ -84,6 +84,41 @@ def test_create_batch():
         assert CreateBatches().create_batch(None, None) is None
 
 
+@mock_events
+def test_create_batch_current_batch_id_empty_string():
+    os.environ["LATEST_BATCH_ID"] = latest_batch_id
+
+    def mock_get_latest_batch(*args, **kwargs):
+        return ""
+
+    def mock_create_new_batch_id(*args, **kwargs):
+        return "new_batch_id"
+
+    create_batches = CreateBatches()
+    create_batches.get_latest_batch = mock_get_latest_batch
+    create_batches.create_new_batch_id = mock_create_new_batch_id
+
+    create_batches.create_batch(None, None)
 
 
+def test_create_batch_current_batch_id_not_empty_string():
 
+    dict1 = {"x": 0}
+
+    os.environ["LATEST_BATCH_ID"] = latest_batch_id
+
+    def mock_get_latest_batch(*args, **kwargs):
+        return "latest_batch_id"
+
+    def mock_push_batchid_to_queue(*args, **kwargs):
+        pass
+
+    def mock_create_new_batch_id(*args, **kwargs):
+        return "new_batch_id"
+
+    create_batches = CreateBatches()
+    create_batches.get_latest_batch = mock_get_latest_batch
+    create_batches.push_batchid_to_queue = mock_push_batchid_to_queue
+    create_batches.create_new_batch_id = mock_create_new_batch_id
+
+    create_batches.create_batch(None, None)
