@@ -1,6 +1,5 @@
-aws-requests-auth
-coverage
-google-compute-engine
-moto
-pytest
+boto3
 utils
+moto
+coverage
+pytest
